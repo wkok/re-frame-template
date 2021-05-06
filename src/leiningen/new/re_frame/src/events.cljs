@@ -3,8 +3,8 @@
    [re-frame.core :as re-frame]{{#re-pressed?}}
    [re-pressed.core :as rp]{{/re-pressed?}}
    [{{ns-name}}.db :as db]{{#10x?}}
-   [day8.re-frame.tracing :refer-macros [fn-traced]]{{/10x?}}
-   ))
+   [day8.re-frame.tracing :refer-macros [fn-traced]]{{/10x?}}{{#crux?}}
+   [wkok.re-frame-crux]{{/crux?}}))
 
 (re-frame/reg-event-db
  ::initialize-db
@@ -40,3 +40,36 @@
  (fn [db [_ value]]
    (assoc db :re-pressed-example value)))
 {{/re-pressed?}}
+
+{{#crux?}}
+(re-frame/reg-event-db
+ ::something-changed
+ (fn [db [_ something]]
+   (assoc db :something something)))
+
+(re-frame/reg-event-fx
+ ::put-something-in-crux
+ (fn [{:keys [db]} [_ _]]
+   {:crux/put {:doc        {:something/value (:something db)}
+               :on-success [::put-succeeded]
+               :on-failure #(js/alert (str "Failed!\n\nIs Crux running?\n\nError: " %))}}))
+
+(re-frame/reg-event-db
+ ::put-succeeded
+ (fn [db [_ _]]
+   (update db :things conj (:something db))))
+
+(re-frame/reg-event-fx
+ ::query-all-the-things
+ (fn [_ [_ _]]
+   {:crux/query {:query      '{:find  [?value]
+                               :keys  [value]
+                               :where [[?e :something/value ?value]]}
+                 :on-success [::query-succeeded]
+                 :on-failure #(js/console.log (str "Failed!\n\nIs Crux running?\n\nError: " %))}}))
+
+(re-frame/reg-event-db
+ ::query-succeeded
+ (fn [db [_ things]]
+   (assoc db :things (map :value things))))
+{{/crux?}}

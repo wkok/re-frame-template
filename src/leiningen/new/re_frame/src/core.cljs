@@ -33,6 +33,7 @@
                                           :small-monitor
                                           1200
                                           :large-monitor]
-                            :debounce-ms 166}]){{/breaking-point?}}
+                            :debounce-ms 166}]){{/breaking-point?}}{{#crux?}}
+  (re-frame/dispatch [::events/query-all-the-things]){{/crux?}}
   (dev-setup)
   (mount-root))

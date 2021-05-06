@@ -6,8 +6,8 @@
    [{{ns-name}}.events :as events]{{/re-pressed?}}{{#garden?}}
    [{{ns-name}}.styles :as styles]{{/garden?}}
    [{{ns-name}}.subs :as subs]{{#git-inject?}}
-   [{{ns-name}}.config :as config]{{/git-inject?}}
-   ))
+   [{{ns-name}}.config :as config]{{/git-inject?}}{{#crux?}}
+   [{{ns-name}}.events :as events]{{/crux?}}))
 
 {{#re-pressed?}}
 (defn dispatch-keydown-rules []
@@ -65,5 +65,20 @@
      [display-re-pressed-example]{{/re-pressed?}}{{#breaking-point?}}
      [:div
       [:h3 (str "screen-width: " @(re-frame/subscribe [::bp/screen-width]))]
-      [:h3 (str "screen: " @(re-frame/subscribe [::bp/screen]))]]{{/breaking-point?}}
-     ]))
+      [:h3 (str "screen: " @(re-frame/subscribe [::bp/screen]))]]{{/breaking-point?}}{{#crux?}}
+     [:div
+      [:label {:for "something"} "Something:"]
+      [:input {:type      "text" :id "something"
+               :value     @(re-frame/subscribe [::subs/something])
+               :on-change #(re-frame/dispatch [::events/something-changed (-> % .-target .-value)])}]
+      [:input {:type     "button" :value "Put it in Crux!"
+               :on-click #(re-frame/dispatch [::events/put-something-in-crux])}]]
+     (let [things @(re-frame/subscribe [::subs/all-the-things])]
+       (when (not (empty? things))
+         [:div
+          [:h3 "All the things"]
+          [:p "(Try refreshing the page. All the things will be queried from Crux!)"]
+          [:ul
+           (for [thing things]
+             ^{:key (random-uuid)}
+             [:li thing])]])){{/crux?}}]))

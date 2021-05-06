@@ -10,6 +10,7 @@
    [leiningen.new.options.views :as views]
    [leiningen.new.options.helpers :as helpers]
    [leiningen.new.options.cider :as cider]
+   [leiningen.new.options.crux :as crux]
    [clojure.set :as set])
   (:use [leiningen.new.templates :only [name-to-path sanitize-ns ->files]]))
 
@@ -19,27 +20,27 @@
 
 (defn app-files [data options]
   (concat
-   (base/files data)
-   (views/view-cljs options data)
+    (base/files data)
+    (views/view-cljs options data)
 
-   ;; css
-   (when (helpers/option? garden/option options) (garden/files data))
+    ;; css
+    (when (helpers/option? garden/option options) (garden/files data))
 
-   ;; debug
-   ;;
+    ;; debug
+    ;;
 
-   ;; development
-   (when (helpers/option? kondo/option options) (kondo/files data))
-   (when (helpers/option? test/option options) (test/files data))
+    ;; development
+    (when (helpers/option? kondo/option options) (kondo/files data))
+    (when (helpers/option? test/option options) (test/files data))
 
-   ;; full-stack
-   (when (helpers/option? cider/option options) (cider/files data))
+    ;; full-stack
+    (when (helpers/option? cider/option options) (cider/files data))
 
-   ;; misc.
-   (when (helpers/option? re-com/option options) (re-com/assets data))
+    ;; misc.
+    (when (helpers/option? re-com/option options) (re-com/assets data))
 
-   ;; routing
-   (when (helpers/option? routes/option options) (routes/routes-cljs data))))
+    ;; routing
+    (when (helpers/option? routes/option options) (routes/routes-cljs data))))
 
 
 
@@ -56,18 +57,21 @@
    :10x?      (helpers/option? "+10x" options)
 
    ;; development
-   :cider?   (helpers/option? cider/option options)
-   :kondo?   (helpers/option? kondo/option options)
-   :test?    (helpers/option? test/option options)
+   :cider?      (helpers/option? cider/option options)
+   :kondo?      (helpers/option? kondo/option options)
+   :test?       (helpers/option? test/option options)
    :git-inject? (helpers/option? "+git-inject" options)
 
    ;; misc.
-   :re-com?     (helpers/option? re-com/option options)
-   :re-pressed? (helpers/option? "+re-pressed" options)
+   :re-com?         (helpers/option? re-com/option options)
+   :re-pressed?     (helpers/option? "+re-pressed" options)
    :breaking-point? (helpers/option? "+breaking-point" options)
 
    ;; routing
-   :routes? (helpers/option? routes/option options)})
+   :routes? (helpers/option? routes/option options)
+
+   ;; crux
+   :crux? (helpers/option? crux/option options)})
 
 
 
@@ -95,7 +99,10 @@
     "+breaking-point"
 
     ;; routing
-    routes/option})
+    routes/option
+
+    ;; crux
+    crux/option})
 
 
 

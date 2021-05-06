@@ -20,3 +20,15 @@
  (fn [db _]
    (:re-pressed-example db)))
 {{/re-pressed?}}
+
+{{#crux?}}
+(re-frame/reg-sub
+ ::something
+ (fn [db]
+   (:something db)))
+
+(re-frame/reg-sub
+ ::all-the-things
+ (fn [db]
+   (-> (:things db) sort)))
+{{/crux?}}
