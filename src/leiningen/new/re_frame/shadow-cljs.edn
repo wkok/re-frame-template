@@ -21,7 +21,7 @@
   [re-frisk "1.5.1"]{{/re-frisk?}}{{#cider?}}
   [cider/cider-nrepl "0.25.11"]{{/cider?}}{{#git-inject?}}
   [day8/shadow-git-inject "0.0.5"]{{/git-inject?}}{{#crux?}}
-  [net.clojars.wkok/re-frame-crux "0.2.0-alpha"]{{/crux?}}]{{#git-inject?}}
+  [net.clojars.wkok/re-frame-crux "0.2.2-alpha"]{{/crux?}}]{{#git-inject?}}
 
  :build-defaults
  {:build-hooks [(shadow-git-inject.core/hook)]}{{/git-inject?}}
