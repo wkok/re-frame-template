@@ -40,8 +40,17 @@ cd resources/public
 google-chrome --headless --disable-gpu index.html
 cd ../../..
 
-printf "\ncreating base +10x +breaking-point +cider +garden +handler +kondo +re-com +re-frisk +re-pressed +routes +test\n"
-lein new re-frame everything +10x +breaking-point +cider +garden +git-inject +kondo +re-com +re-frisk +re-pressed +routes +test
+printf "\ncreating base +crux\n"
+lein new re-frame base-crux +crux
+cd base-crux
+npm install
+npm run release
+cd resources/public
+google-chrome --headless --disable-gpu index.html
+cd ../../..
+
+printf "\ncreating base +10x +breaking-point +cider +garden +handler +kondo +re-com +re-frisk +re-pressed +routes +test +crux\n"
+lein new re-frame everything +10x +breaking-point +cider +garden +git-inject +kondo +re-com +re-frisk +re-pressed +routes +test +crux
 cd everything
 npm install
 npm run release

@@ -22,7 +22,8 @@ you.
   - CSS rendering: [Garden](https://github.com/noprompt/garden){{/garden?}}{{#re-com?}}
   - UI components: [re-com](https://github.com/day8/re-com){{/re-com?}}{{#re-pressed?}}
   - Keyboard event handler: [re-pressed](https://github.com/gadfly361/re-pressed){{/re-pressed?}}{{#breaking-point?}}
-  - Screen breakpoints tool: [BREAKING-POINT](https://github.com/gadfly361/breaking-point){{/breaking-point?}}
+  - Screen breakpoints tool: [BREAKING-POINT](https://github.com/gadfly361/breaking-point){{/breaking-point?}}{{#crux?}}
+  - Effects for Crux REST API [re-frame-crux](https://github.com/wkok/re-frame-crux){{/crux?}} 
 * Build tools
   - CLJS compilation, dependency management, REPL, & hot reload: [`shadow-cljs`](https://github.com/thheller/shadow-cljs){{#test?}}
   - Test framework: [cljs.test](https://clojurescript.org/tools/testing)
@@ -90,7 +91,12 @@ Use your preferred editor or IDE that supports Clojure/ClojureScript development
     clj-kondo --lint "$(npx shadow-cljs classpath)"
     ```
 7. Setup
-[linting in your editor](https://github.com/borkdude/clj-kondo/blob/master/doc/editor-integration.md){{/kondo?}}
+[linting in your editor](https://github.com/borkdude/clj-kondo/blob/master/doc/editor-integration.md){{/kondo?}}{{#crux?}}
+8. Start a local Crux node on port 3000:
+   ```sh
+   docker run -p 3000:3000 juxt/crux-in-memory:21.04-1.16.0
+   ```
+   {{/crux?}}
 
 ### Browser Setup
 
